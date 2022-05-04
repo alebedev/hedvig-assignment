@@ -1,9 +1,19 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { fetchPerilsAction, selectPerils } from "./perilsSlice";
+import { fetchPerilsAction, perilsSlice, selectPerils } from "./perilsSlice";
+import { Peril } from "./perilsApi";
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  Container,
+  Dialog,
+  DialogTitle,
+  Typography,
+} from "@mui/material";
 
 export function Perils() {
-  const data = useAppSelector(selectPerils);
+  const perils = useAppSelector(selectPerils);
   const dispatch = useAppDispatch();
 
   // Quick and dirty data loading.  Would use router in real world
@@ -13,36 +23,90 @@ export function Perils() {
     );
   }, [dispatch]);
 
-  switch (data.status) {
+  switch (perils.status) {
     case "loading": {
-      return <div>Loading...</div>;
+      return <Container>Loading...</Container>;
     }
     case "error": {
-      return <div>Something went wrong</div>;
+      return <Container>Something went wrong</Container>;
     }
     case "idle": {
-      if (!data.value?.length) {
-        return <div>No perils for this contract type</div>;
+      if (!perils.value?.length) {
+        return <Container>No perils for this contract type</Container>;
       }
       return (
-        <div>
-          <div>{data.value.length} perils</div>
-          {data.value.map((item) => {
+        <Container>
+          {perils.value.map((peril, i) => {
+            // NOTE: In real world we'd have some stable .id
             return (
-              <div key={item.title}>
-                <img
-                  alt=""
-                  width="40"
-                  height="40"
-                  src={item.icon.variants.light.svgUrl}
-                />
-                {item.title} : {item.shortDescription}
-              </div>
+              <PerilCard
+                key={peril.title}
+                index={i}
+                selected={i === perils.selectedIndex}
+                peril={peril}
+              />
             );
           })}
-        </div>
+        </Container>
       );
     }
   }
-  return <div>TODO: Perils</div>;
+}
+
+function PerilCard({
+  peril,
+  index,
+  selected,
+}: {
+  peril: Peril;
+  index: number;
+  selected: boolean;
+}) {
+  const dispatch = useAppDispatch();
+  const handleClick = useCallback(
+    () => dispatch(perilsSlice.actions.select(index)),
+    [dispatch, index]
+  );
+  const handleClose = useCallback(
+    () => dispatch(perilsSlice.actions.deselect()),
+    [dispatch]
+  );
+  const handlePrev = useCallback(
+    () => dispatch(perilsSlice.actions.selectPrev()),
+    [dispatch]
+  );
+  const handleNext = useCallback(
+    () => dispatch(perilsSlice.actions.selectNext()),
+    [dispatch]
+  );
+  return (
+    <>
+      <Card raised onClick={handleClick}>
+        <CardActionArea>
+          <CardContent>
+            <img
+              alt=""
+              width="40"
+              height="40"
+              src={peril.icon.variants.light.svgUrl}
+            />
+            <Typography>{peril.title}</Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+      <Dialog open={selected} onClose={handleClose}>
+        <DialogTitle>
+          <button onClick={handlePrev}>&lt;</button>
+          {peril.title}
+          <button onClick={handleNext}>&gt;</button>
+        </DialogTitle>
+        <div>{peril.description}</div>
+        <ul>
+          {peril.covered.map((item, i) => (
+            <li key={i}>{item}</li>
+          ))}
+        </ul>
+      </Dialog>
+    </>
+  );
 }
