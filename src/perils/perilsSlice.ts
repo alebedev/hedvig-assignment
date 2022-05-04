@@ -28,6 +28,9 @@ export const perilsSlice = createSlice({
       .addCase(fetchPerilsAction.pending, (state) => {
         state.status = "loading";
       })
+      .addCase(fetchPerilsAction.rejected, (state) => {
+        state.status = "error";
+      })
       .addCase(fetchPerilsAction.fulfilled, (state, action) => {
         state.status = "idle";
         state.value = action.payload;

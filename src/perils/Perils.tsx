@@ -6,8 +6,6 @@ export function Perils() {
   const data = useAppSelector(selectPerils);
   const dispatch = useAppDispatch();
 
-  console.log("data", data);
-
   // Quick and dirty data loading.  Would use router in real world
   useEffect(() => {
     dispatch(
