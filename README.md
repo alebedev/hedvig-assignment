@@ -50,6 +50,7 @@ Time-saving compromises
 - Default eslint config
 - No i18n
 - No accessibility
+- No dark theme
 - No error boundaries, programmer error in any component will crash the whole app
 - Hardcoded sizes / margins
 - Only integration tests.  No complex logic to justify unit tests, no e2e tests to save time
@@ -59,6 +60,7 @@ Time-saving compromises
 
 What could've been used
 
+- axios for requests. Higher-level and more ergonomic than fetch
 - Remix / Next.js for complete SSR + client side solution
 - recoil for state - less boilerplate and better performance than redux, but less mature right now
 - CSS modules for styles - prevents name clashes in CSS
