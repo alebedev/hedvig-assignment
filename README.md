@@ -1,46 +1,64 @@
-# Getting Started with Create React App
+## Overview
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a home assignment for Hedvig
 
-## Available Scripts
+Overall philosophy: simplest thing that would work
 
-In the project directory, you can run:
+## Usage
 
-### `yarn start`
+```bash
+# Installation
+yarn install
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Open in browser
+yarn start
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+# Tests
+yarn test
 
-### `yarn test`
+# Build and verify
+yarn build
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Architecture
 
-### `yarn build`
+App is based on create-react-app, written in Typescript, with Redux (via redux-toolkit)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Design choices
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### create-react-app
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Optimal for small projects, no need to spend time for setup
 
-### `yarn eject`
+### redux-toolkit
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Most ergonomic way to use Redux today - immer for data, way less boilerplate than older conventions
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### redux-thunk
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Came with template. Not enough async parts to justify redux-saga
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### @mui/core as UI toolkit
 
-## Learn More
+Most popular choice for React and familiar to me from past experience
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Tradeoffs and limitations
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Time-saving compromises
+
+- Only tested in Chrome
+- Default eslint config
+- No i18n
+- No accessibility
+- No error boundaries, programmer error in any component will crash the whole app
+- Hardcoded sizes / margins
+- Only integration tests.  No complex logic to justify unit tests, no e2e tests to save time
+- No routing.  Could be useful in real life to link to specific peril via anchor
+
+## Alternatives
+
+What could've been used
+
+- Remix / Next.js for complete SSR + client side solution
+- recoil for state - less boilerplate and better performance than redux, but less mature right now
+- CSS modules for styles - prevents name clashes in CSS
