@@ -29,7 +29,7 @@ export async function fetchPerils(
 ): Promise<Peril[]> {
   const url = new URL(`${API_PREFIX}/perils`);
   url.search = new URLSearchParams(options).toString();
-  return fetch(url.toString()).then((resp) => {
+  return fetch(url.toString(), { mode: "cors" }).then((resp) => {
     if (!resp.ok) {
       throw new Error("Error response");
     }

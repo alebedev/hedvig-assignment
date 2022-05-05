@@ -36,11 +36,17 @@ Most ergonomic way to use Redux today - immer for data, way less boilerplate tha
 
 ### redux-thunk
 
-Came with template. Not enough async parts to justify redux-saga
+Came with template. Not enough async parts to justify complex solutions like redux-saga
 
 ### @mui/core as UI toolkit
 
 Most popular choice for React and familiar to me from past experience
+
+### sx-based styles, default theme
+https://mui.com/system/the-sx-prop/
+
+Simplest and idiomatic way of styling for @mui/core.
+It does not make sense to make components reusable when there's only one usage
 
 ## Tradeoffs and limitations
 
@@ -58,7 +64,15 @@ Time-saving compromises
 
 ## Alternatives
 
-What could've been used
+### UI
+
+- Accordion might've been better UI for list with ability
+to expand peril to see all the details in place, without modal.
+This option better retains user context and is easier to make
+responsive.  I liked the challenge of doing back/forward navigation
+within modal so I kept it.
+
+### Tech stack
 
 - axios for requests. Higher-level and more ergonomic than fetch
 - Remix / Next.js for complete SSR + client side solution
