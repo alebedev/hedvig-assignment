@@ -3,11 +3,11 @@ import { Peril } from "./perilsApi";
 import { useAppDispatch } from "../hooks";
 import { perilsSlice } from "./perilsSlice";
 import {
-  Box,
   Card,
   CardActionArea,
   CardContent,
   Dialog,
+  DialogContent,
   DialogTitle,
   Divider,
   IconButton,
@@ -75,12 +75,13 @@ export const PerilCard = memo(
         <Dialog
           open={selected}
           fullScreen={isTiny}
-          sx={{ padding: "1rem", minHeight: "sx" }}
+          sx={{ padding: 2 }}
+          PaperProps={{ sx: { minHeight: "400px" } }}
           onClose={handleClose}
         >
           <DialogTitle
             sx={{
-              paddingTop: "1.5rem",
+              paddingTop: 3,
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-between",
@@ -102,15 +103,15 @@ export const PerilCard = memo(
               <ChevronRightIcon />
             </IconButton>
           </DialogTitle>
-          <Box sx={{ padding: "1rem" }}>
+          <DialogContent sx={{ padding: 2 }}>
             <Typography variant="body1">{peril.description}</Typography>
-            <Divider sx={{ marginTop: "1rem" }} />
+            <Divider sx={{ marginTop: 2 }} />
             <ul>
               {peril.covered.map((item, i) => (
                 <li key={i}>{item}</li>
               ))}
             </ul>
-          </Box>
+          </DialogContent>
         </Dialog>
       </>
     );
