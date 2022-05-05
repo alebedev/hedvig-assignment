@@ -88,16 +88,17 @@ export const PerilCard = memo(
             }}
           >
             <IconButton
+              title="close"
               onClick={handleClose}
               sx={{ position: "absolute", top: 0, right: 0 }}
             >
               <CloseIcon />
             </IconButton>
-            <IconButton onClick={handlePrev}>
+            <IconButton title="previous" onClick={handlePrev}>
               <ChevronLeftIcon />
             </IconButton>
             {peril.title}
-            <IconButton onClick={handleNext}>
+            <IconButton title="next" onClick={handleNext}>
               <ChevronRightIcon />
             </IconButton>
           </DialogTitle>
